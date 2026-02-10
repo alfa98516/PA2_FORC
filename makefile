@@ -1,10 +1,14 @@
 file = main.cpp
 out = a.out
 warnings = pedantic
-std = c++03
+std = c++98
 
 make:
 	g++ -W$(warnings) -g -std=$(std) $(file) -o $(out)
+
+array:
+	g++ -W$(warnings) -g -std=$(std) test_dynamic_array.cpp -o $(out)
+
 fast:
 	g++ -W$(warnings) -g -Ofast -std=$(std) $(file) -o $(out)
 1:
@@ -13,3 +17,6 @@ fast:
 	g++ -W$(warnings) -g -O2 -std=$(std) $(file) -o $(out)
 3:
 	g++ -W$(warnings) -g -O3 -std=$(std) $(file) -o $(out)
+
+clean:
+	rm -f $(out)
