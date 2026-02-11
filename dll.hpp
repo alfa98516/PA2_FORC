@@ -1,15 +1,7 @@
+#include "node.hpp"
+
 #ifndef DLL
 #define DLL
-template <typename T>
-struct Node{
-    T data;
-    Node<T>* next;
-    Node<T>* prev;
-
-    Node(T value) : data(value), next(NULL), prev(NULL){}
-    Node() : data(T()), next(NULL), prev(NULL){}
-};
-
 template <typename T>
 class Dll{
     private:
@@ -156,8 +148,6 @@ class Dll{
         int size() const{
             return list_size;
         }
-
-
 };
 
 #endif
