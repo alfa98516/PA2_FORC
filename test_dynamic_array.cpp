@@ -6,7 +6,7 @@ using std::cout;
 using std::cin;
 using std::ws;
 
-Dynamic_Vector<int> vecs[1000];
+Dynamic_Vector<int> vects[1000];
 
 int main() {
     int q;

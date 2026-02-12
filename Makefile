@@ -22,7 +22,7 @@ CXXFLAGS = $(SYMBOLS) $(WARNINGS) $(STD)
 HEAP_BIN = heap2
 DEQUEUE_BIN = dequeue
 ARRAY_BIN = array
-DLL = dll
+DLL_BIN = dll
 
 a.out: $(MAIN)
 	$(CC) $(CXXFLAGS) $(MAIN) -o a.out
@@ -35,10 +35,10 @@ $(HEAP_BIN): $(HEAP)
 
 $(DEQUEUE_BIN): $(DEQUEUE)
 	$(CC) $(CXXFLAGS) $(DEQUEUE_TEST) -o $(DEQUEUE_BIN)
-
-
+$(DLL_BIN): $(DLL)
+	$(CC) $(CXXFLAGS) $(DLL_TEST) -o $(DLL_BIN)
 
 
 clean:
-	rm -f $(HEAP_BIN) $(DEQUEUE_EXE) $(ARRAY_EXE) *.out
+	rm -f $(HEAP_BIN) $(DEQUEUE_BIN) $(ARRAY_BIN) $(DLL_BIN) *.out
 
