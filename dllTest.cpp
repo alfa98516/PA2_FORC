@@ -24,9 +24,9 @@ int main() {
             std::cin >> copy_id;
             dll[id] = dll[copy_id];
         } else if (op == 'f') {
-            std::cout << dll[id].front() << std::endl;
+            std::cout << dll[id].front()->data << std::endl;
         } else if (op == 'b') {
-            std::cout << dll[id].back() << std::endl;
+            std::cout << dll[id].back()->data << std::endl;
         } else if (op == 'i') {
             dll[id].insert(node, 10);
         } else if (op == 'e') {

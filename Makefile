@@ -43,5 +43,3 @@ $(DLL_BIN): $(DLL)
 clean:
 	rm -f $(HEAP_BIN) $(DEQUEUE_BIN) $(ARRAY_BIN) $(DLL_BIN) *.out
 
-
-
