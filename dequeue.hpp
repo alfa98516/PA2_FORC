@@ -74,7 +74,6 @@ class Dequeue {
             }
             return *this;
         }
-        
 
         ~Dequeue() {
             delete[] data;
