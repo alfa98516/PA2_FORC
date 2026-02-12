@@ -1,12 +1,12 @@
+#include "dynamic_array.hpp"
 #include <cassert>
 #include <iostream>
-#include "dynamic_array.hpp"
 
-using std::cout;
 using std::cin;
+using std::cout;
 using std::ws;
 
-Dynamic_Vector<int> vects[1000];
+Dynamic_Vector<int> vecs[1000];
 
 int main() {
     int q;
@@ -27,48 +27,39 @@ int main() {
             other--; // change to 0-based index
             Dynamic_Vector<int> tmp = Dynamic_Vector<int>(vecs[instance]);
             vecs[other] = tmp;
-        }
-        else if (op == '+') {
+        } else if (op == '+') {
             int value;
             cin >> value;
-            
-        }
-        else if (op == '-') {
-            int ret = vecs[instance].popback();
+
+        } else if (op == '-') {
+            int ret = vecs[instance].pop();
             cout << ret << '\n';
-        }   
-        else if (op == 'i') {
+        } else if (op == 'i') {
             int index, value;
             cin >> index >> value;
-            vects[instance][index] = value;
-        }   
-        else if (op == 'e') {
+            vecs[instance][index] = value;
+        } else if (op == 'e') {
             int index;
             cin >> index;
-            vects[instance].erase(index);
-        }
-        else if (op == 'g') {
+            vecs[instance].erase(index);
+        } else if (op == 'g') {
             int index;
             cin >> index;
             // get
-            std::cout << vects[instance][index] << '\n';
-        }
-        else if (op == 's') {
+            std::cout << vecs[instance][index] << '\n';
+        } else if (op == 's') {
             int index, value;
             cin >> index >> value;
             // set
-            vects[instance][index] = value;
-        }
-        else if (op == 'r') {
+            vecs[instance][index] = value;
+        } else if (op == 'r') {
             int sz;
             cin >> sz;
             // resize
-        }
-        else if (op == 'p') {
+        } else if (op == 'p') {
             // print
-            std::cout << vect[instance] << '\n';
-        }
-        else {
+            std::cout << vecs[instance] << '\n';
+        } else {
             assert(false);
         }
     }
