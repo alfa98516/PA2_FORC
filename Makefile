@@ -2,6 +2,7 @@
 MAIN = main.cpp
 HEAP_TEST = heapTest.cpp
 DEQUEUE_TEST = dequeTest.cpp
+DLL_TEST = dllTest.cpp
 ARRAY_TEST = test_dynamic_array.cpp
 
 # Header files
@@ -40,7 +41,4 @@ $(DEQUEUE_BIN): $(DEQUEUE)
 
 clean:
 	rm -f $(HEAP_BIN) $(DEQUEUE_EXE) $(ARRAY_EXE) *.out
-# RUN EXAMPLE (or something)
-# g++ -std=c++98 heapTest.cpp -o heap
-# ./heap2
-# */
+
