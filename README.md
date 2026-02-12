@@ -15,16 +15,26 @@
 
 
 ### What needs to be written in the terminal to compile and run the program. If you provide additional files for the tests, then clarify that and say how to run and verify the tests ran correctly.
-To run dataStructer:
+To compile dataStructer:
 - Array: array
 - Dll: dll
 - Dequeue: dequeue
 - Heap: heap2
-- Hash:
-- Binary tree: 
+- Hash: --
+- Binary tree: --
 
 ```bash
 make <dataStructer>
+```
+
+To test the data structer:
+```bash
+./<dataStructer>
+```
+
+To delete/clean the binary file that creates, run:
+```bash
+make clean
 ```
 
 ### Anything else a student wishes to say. Put it here and not in the Canvas comments!
