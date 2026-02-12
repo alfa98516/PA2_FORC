@@ -1,4 +1,3 @@
-warnings = pedantic
 std = c++98
 
 # Test files
@@ -21,7 +20,7 @@ $(DEQUEUE_EXE): $(DEQUEUE_TEST) dequeue.hpp
 
 clean:
 	rm -f $(HEAP_EXE) $(DEQUEUE_EXE)
-# RUN
+# RUN EXAMPLE (or something)
 # g++ -std=c++98 heapTest.cpp -o heap
 # ./heap2
 # */
