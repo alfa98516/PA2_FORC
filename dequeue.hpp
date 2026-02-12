@@ -47,13 +47,34 @@ class Dequeue {
             data = new T[capacity];
         }
 
-        Dequeue(const Dequeue &copy) : capacity(copy.capacity), head(copy.head), rear(copy.rear), count(copy.count) { // copy constructer.
-             // Assignment and copy construction - must properly copy the contents of another instance of the data structure.
+        Dequeue(const Dequeue &other) : capacity(other.capacity), head(other.head), rear(other.rear), count(other.count) { // copy constructer.
+             // copy construction - must properly copy the contents of another instance of the data structure.
             data = new T[capacity];
-            for (int i = 0; i < capacity; i++) {
-                data[i] = copy.data[i];
+            for (int i = 0; i < count; i++) {
+                data[(head + i) % capacity] = other.data[(other.head + i) % other.capacity];
             }
         }
+
+        Dequeue& operator=(const Dequeue& other) {
+            // Assignment constructer.
+            if (this == &other) {
+                return *this; // self-assignment
+            }
+            delete[] data; // free existing memory
+
+            capacity = other.capacity;
+            head = other.head;
+            rear = other.rear;
+            count = other.count;
+
+            // allocate new memory
+            data = new T[capacity];
+            for (int i = 0; i < count; i++) {
+                data[(head + i) % capacity] = other.data[(other.head + i) % other.capacity];
+            }
+            return *this;
+        }
+        
 
         ~Dequeue() {
             delete[] data;
@@ -64,8 +85,12 @@ class Dequeue {
             if (count == capacity) {
                 resize();
             }
-            head = (head-1 + capacity) % capacity;
-            data[head] = x;
+            if (count == 0) {
+                data[head] = x;
+            } else {
+                head = (head-1 + capacity) % capacity;
+                data[head] = x;
+            }
             count++;
         }
 
@@ -82,7 +107,7 @@ class Dequeue {
         void pop_front() {
             // TODO:: must remove the front element off of the deque.
             if (count == 0) {
-                std::cout << "Deque is empty" << std::endl;
+                std::cerr << "Deque is empty" << std::endl;
                 return;
             }
             head = (head + 1) % capacity;
@@ -96,11 +121,16 @@ class Dequeue {
         void pop_back() {
             // TODO:: must remove the back element off of the deque.
             if (count == 0) {
-                std::cout << "Deque is empty" << std::endl;
+                std::cerr << "Deque is empty" << std::endl;
                 return;
             }
             count--;
-            rear = (head + count -1) % capacity;
+            if (count == 0) {
+                head = 0;
+                rear = 0;
+            } else {
+                rear = (head + count -1) % capacity;
+            }
 
             if (capacity > 2 && count < capacity/2) {
                 shrink();
@@ -110,8 +140,8 @@ class Dequeue {
         T front() {
             // TODO:: must provide access to the front element of the deque.
             if (count == 0) {
-                std::cout << "Deque is empty" << std::endl;
-                return -1;
+                std::cerr << "Deque is empty" << std::endl;
+                return;
             }
             return data[head];
         }
@@ -119,8 +149,8 @@ class Dequeue {
         T back() {
             // TODO:: must provide access to the back element of the deque.
             if (count == 0) {
-                std::cout << "Deque is empty" << std::endl;
-                return -1;
+                std::cerr << "Deque is empty" << std::endl;
+                return;
             }
             return data[rear];
         }
@@ -141,9 +171,13 @@ class Dequeue {
             std::cout << "Capacity: " << capacity << std::endl;
             std::cout << "Size: " << count << std::endl;
             std::cout << "Head: " << head << std::endl;
-            std::cout << "Head value: " << data[head] << std::endl;
             std::cout << "Rear: " << rear << std::endl;
-            std::cout << "Rear value: " << data[rear] << std::endl;
+            if (count > 0) {
+                std::cout << "Head value: " << data[head] << std::endl;
+                std::cout << "Rear value: " << data[rear] << std::endl;
+            } else {
+                std::cout << "Deque is empty — no head/rear value" << std::endl;
+            }
             getAll();
         }
 
