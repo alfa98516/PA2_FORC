@@ -1,112 +1,112 @@
 #ifndef DYNAMIC_ARRAY
 #define DYNAMIC_ARRAY
 #include <cstdlib>
-#include <algorithm>
 #include <ostream>
 
 template <typename T>
-class Dynamic_Vector{
-    private:
-    
+class Dynamic_Vector {
     T* vect;
-    size_t size;
-    int capacity;
-    
+    size_t size; // I really have not a clue how were supposed to track the length and size of the array
+    size_t capacity; 
+
     void grow() {
-        capacity+=size;
-        size *= 2;
-        T* _vect = new T[size];
-        for (int i = 0; i<len(); ++i) {
+        size_t new_capacity = capacity * 2;
+        T* _vect = new T[new_capacity];
+        for(int i = 0; i<size; ++i) {
             _vect[i] = vect[i];
         }
-        delete vect;
+        delete[] vect;
+        capacity = new_capacity;
         vect = _vect;
-
     }
     
     void shrink() {
-        size/=2;
+        size /= 2;
         T* _vect = new T[size];
-        for (int i = 0; i<len(); ++i) {
+        for(int i = 0; i<size; ++i) {
             _vect[i] = vect[i];
         }
-        
-        delete vect;
+
+        delete[] vect;
         vect = _vect;
     }
 
-    public:
+public:
+    /**
+     * @brief This is the base constructor, sets the capacity at 0 and the size to 32 (this skips a couple resizes)
+     * 
+     */
+    Dynamic_Vector<T>() : size(0), capacity(32){ // initializing at 32 to skip a couple resizes, this will not effect length
+        vect = new T[capacity];
+    }
+    
+    /**
+     * @brief This constructor is kind of dumb and stupid, please use the default constructor and then just resize, stupid
+     * @param _capacity the capacity the user wants to initialize at
+     */
+    Dynamic_Vector<T>(size_t _capacity) : size(_capacity), capacity(32){
+        if (capacity < size) {
+            int i = 1;
+            while(i < capacity) i*=2; // round up to nearest power of 2, improves efficiency of some functions.
+            // amortized, this constructor still runs in O(1)
+            capacity = i;
+        }
 
-    Dynamic_Vector<T>(int _size): size(_size) {
-        vect = new T[size];
-        capacity = size;
+        vect = new T[capacity];
 
     }
-
-    Dynamic_Vector<T>() {
-        size = 2;
-        capacity = 2;
-        vect = new T[size];
-
-    }
-
-    Dynamic_Vector<T>(const Dynamic_Vector &other) : size(other.size), capacity(other.capacity){
-        vect = new T[size];
-        for (int i = 0; i<size; ++i){
+    
+    
+    /**
+    * @brief Copy constructor, pretty standard.
+    * @param other: This is the Dynamic_Vector were copying from.
+    */
+    Dynamic_Vector(const Dynamic_Vector<T> &other) {
+        vect = new T[capacity];
+        
+        for(size_t i = 0; i<size; ++i) {
             vect[i] = other[i];
         }
     }
-
-    T popback() {
-        T ret = vect[size];
-        vect[size-1] = NULL;
-        capacity++;
-        if (capacity <= size/4) shrink();
-        return ret;
-    }
-
+    
+    /**
+    * @brief Appends a new item at the end of the vector, where "end" is defined as indexing with the length variable
+    * @param item: the item were appending to the vector
+    */
     void append(T item) {
-        if(capacity <= 0) grow();
-        vect[size-capacity] = item;
-        capacity--;
-    }
-    
-    // whenever the user does something like "a = vect[0]" this function gets called 
-    // otherwise it the other operator[] function gets called 
-    // this is very useful for the copy constructor.
-    const T& operator[](size_t index) const {
-        if (index >= size) exit(1);
-        return vect[index];
-    }
-    
-    // please use this responsably, dont set to null that would be dumb
-    T& operator[](size_t index) {
-        if (index >= size) exit(1);
-        return vect[index];
-    }
-    
-    void erase(size_t index) {
-        
+        if (size >= capacity) grow();
+        vect[size] = item;
+        size++;
     }
 
-    // better as const and also allows me to use the ostream operator<< function.
-    const size_t len() const{
-        return size-capacity-1;
+    const T& operator[](size_t idx) const {
+        return vect[idx];
     }
 
-    void operator+(T rhs) {
-        append(rhs);
+    T& operator[](size_t idx) {
+        return vect[idx];
     }
+
+    const size_t len() const {
+        return size;
+    }
+
 
 };
+
 #endif
 
 #ifndef OSTREAM
 #define OSTREAM
+/**
+* @brief this was showin in class, i liked it so now i have it
+* @param out this is the outstream were outputting to (i.e. std::cout)
+* @param Vect: this is the vector were printing out
+* @returns out: it modifies it, and then returns it back, this is so "std::cout << 1 << 4 << 6;" works.
+*/
 template<typename T>
 std::ostream& operator<<(std::ostream& out, const Dynamic_Vector<T> &Vect) {
-    out << Vect.len() << '\n';
-    for(int i = 1; i<Vect.len(); ++i) {
+    for(int i = 0; i<Vect.len(); ++i) {
         out << Vect[i] << " ";
     }
     return out;

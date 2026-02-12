@@ -34,18 +34,18 @@ int main() {
             
         }
         else if (op == '-') {
-            // pop back
-        }
+            int ret = vecs[instance].popback();
+            cout << ret << '\n';
+        }   
         else if (op == 'i') {
             int index, value;
             cin >> index >> value;
-            // insert
-        }
+            vects[instance][index] = value;
+        }   
         else if (op == 'e') {
             int index;
             cin >> index;
-            // erase
-
+            vects[instance].erase(index);
         }
         else if (op == 'g') {
             int index;
@@ -67,7 +67,6 @@ int main() {
         else if (op == 'p') {
             // print
             std::cout << vect[instance] << '\n';
-
         }
         else {
             assert(false);
