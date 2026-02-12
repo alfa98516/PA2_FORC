@@ -24,12 +24,10 @@ int main() {
             std::cin >> copy_id;
             dll[id] = dll[copy_id];
         } else if (op == 'f') {
-            dll[id].front();
+            std::cout << dll[id].front()->data << std::endl;
         } else if (op == 'b') {
-            dll[id].back();
+            std::cout << dll[id].back()->data << std::endl;
         } else if (op == 'i') {
-            char op2;
-            std::cin >> op2;
             dll[id].insert(node, 10);
         } else if (op == 'e') {
             dll[id].erase(node);
@@ -38,13 +36,17 @@ int main() {
         } else if (op == '<') {
             dll[id].predecessor(node);
         } else if (op == 'g') {
-            std::cout << node->data << std::endl;
+            if (node != NULL)
+                std::cout << node->data << std::endl;
         } else if (op == 's') {
             int x;
             std::cin >> x;
-            node->data = x;
+            if (node != NULL) {
+                node->data = x;
+                std::cout << node->data << std::endl;
+            }
         } else if (op == 'z') {
-            dll[id].size();
+            std::cout << dll[id].size() << std::endl;
         }
     }
 
