@@ -37,8 +37,6 @@ $(DEQUEUE_BIN): $(DEQUEUE)
 	$(CC) $(CXXFLAGS) $(DEQUEUE_TEST) -o $(DEQUEUE_BIN)
 
 
-
-
 clean:
-	rm -f $(HEAP_BIN) $(DEQUEUE_EXE) $(ARRAY_EXE) *.out
+	rm -f $(HEAP_BIN) $(DEQUEUE_BIN) $(ARRAY_EXE) $(DLL_BIN) *.out
 
