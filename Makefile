@@ -1,25 +1,45 @@
-std = c++98
-
 # Test files
+MAIN = main.cpp
 HEAP_TEST = heapTest.cpp
 DEQUEUE_TEST = dequeTest.cpp
+ARRAY_TEST = test_dynamic_array.cpp
 
-# Executable filenames
-HEAP_EXE = heap2
-DEQUEUE_EXE = dequeue
+# Header files
+ARRAY = dynamic_array.hpp
+HEAP = heap.hpp 
+DLL = dll.hpp 
+DEQUEUE = dequeue.hpp
 
-# Default target - build all tests
-all: $(HEAP_EXE) $(DEQUEUE_EXE)
+# Cflags
+STD = -std=c++98
+WARNINGS = -Wpedantic
+SYMBOLS = -g
+CC = g++
+CXXFLAGS = $(SYMBOLS) $(WARNINGS) $(STD)
 
-# Compile rules
-$(HEAP_EXE): $(HEAP_TEST) heap.hpp
-	g++ -Wall -Wextra -pedantic -g -std=c++98 $(HEAP_TEST) -o $(HEAP_EXE)
-$(DEQUEUE_EXE): $(DEQUEUE_TEST) dequeue.hpp
-	g++ -Wall -Wextra -pedantic -g -std=c++98 $(DEQUEUE_TEST) -o $(DEQUEUE_EXE)
+# Binary files
+HEAP_BIN = heap2
+DEQUEUE_BIN = dequeue
+ARRAY_BIN = array
+DLL = dll
+
+a.out: $(MAIN)
+	$(CC) $(CXXFLAGS) $(MAIN) -o a.out
+
+$(ARRAY_BIN): $(ARRAY) 
+	$(CC) $(CXXFLAGS) $(ARRAY_TEST) -o $(ARRAY_BIN)
+
+$(HEAP_BIN): $(HEAP)
+	$(CC) $(CXXFLAGS) $(HEAP_TEST) -o $(HEAP_BIN)
+
+$(DEQUEUE_BIN): $(DEQUEUE)
+	$(CC) $(CXXFLAGS) $(DEQUEUE_TEST) -o $(DEQUEUE_BIN)
+
+
 
 
 clean:
-	rm -f $(HEAP_EXE) $(DEQUEUE_EXE)
+	rm -f $(HEAP_BIN) $(DEQUEUE_EXE) $(ARRAY_EXE) *.out
 # RUN EXAMPLE (or something)
 # g++ -std=c++98 heapTest.cpp -o heap
 # ./heap2
