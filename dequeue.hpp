@@ -140,7 +140,7 @@ class Dequeue {
             // TODO:: must provide access to the front element of the deque | O(1)
             if (count == 0) {
                 std::cerr << "Deque is empty" << std::endl;
-                return;
+                return T();
             }
             return data[head];
         }
@@ -149,7 +149,7 @@ class Dequeue {
             // TODO:: must provide access to the back element of the deque | O(1)
             if (count == 0) {
                 std::cerr << "Deque is empty" << std::endl;
-                return;
+                return T();
             }
             return data[rear];
         }
