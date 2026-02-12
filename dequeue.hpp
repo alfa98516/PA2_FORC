@@ -10,7 +10,7 @@ class Dequeue {
         int rear;
         int count;
 
-        // Don't know if needed to implement resize and shrink but did it anyways
+        // Don't know if needed to implement resize and shrink but did it anyways - örugglega flókanar en þetta þurfti að vera
         void resize() { 
             // TODO:: if queue if gets to large for the capacity, then resize it | O(n)
             int increase = capacity*2;

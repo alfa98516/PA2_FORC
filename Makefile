@@ -37,11 +37,9 @@ $(DEQUEUE_BIN): $(DEQUEUE)
 	$(CC) $(CXXFLAGS) $(DEQUEUE_TEST) -o $(DEQUEUE_BIN)
 
 $(DLL_BIN): $(DLL)
-	$(CC) $(CXXFLAGS) $(DLL_TEST) -o $(DLL_BIN)
+	g++ -std=c++98 $(DLL_TEST) -o $(DLL_BIN)
 
 
 clean:
 	rm -f $(HEAP_BIN) $(DEQUEUE_BIN) $(ARRAY_BIN) $(DLL_BIN) *.out
-
-
 
