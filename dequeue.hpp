@@ -12,7 +12,7 @@ class Dequeue {
 
         // Don't know if needed to implement resize and shrink but did it anyways
         void resize() { 
-            // TODO:: if queue if gets to large for the capacity, then resize it.
+            // TODO:: if queue if gets to large for the capacity, then resize it | O(n)
             int increase = capacity*2;
             T* temp = new T[increase];
             for (int i = 0; i < count; i++) {
@@ -26,7 +26,7 @@ class Dequeue {
         }
 
         void shrink() {
-            // TODO:: Decrease the capacity
+            // TODO:: Decrease the capacity | O(n)
             int decrease = capacity/2;
             if (decrease < 2) {
                 return;
@@ -48,7 +48,7 @@ class Dequeue {
         }
 
         Dequeue(const Dequeue &other) : capacity(other.capacity), head(other.head), rear(other.rear), count(other.count) { // copy constructer.
-             // copy construction - must properly copy the contents of another instance of the data structure.
+             // copy construction - must properly copy the contents of another instance of the data structure | O(n)
             data = new T[capacity];
             for (int i = 0; i < count; i++) {
                 data[(head + i) % capacity] = other.data[(other.head + i) % other.capacity];
@@ -56,7 +56,7 @@ class Dequeue {
         }
 
         Dequeue& operator=(const Dequeue& other) {
-            // Assignment constructer.
+            // Assignment constructer | O(n)
             if (this == &other) {
                 return *this; // self-assignment
             }
@@ -80,7 +80,7 @@ class Dequeue {
         }
 
         void push_front(T x) {
-            // TODO:: must insert an element to the front of the deque.
+            // TODO:: must insert an element to the front of the deque | O(1)
             if (count == capacity) {
                 resize();
             }
@@ -94,7 +94,7 @@ class Dequeue {
         }
 
         void push_back(T x) {
-            // TODO:: must insert an element to the back of the deque.
+            // TODO:: must insert an element to the back of the deque | O(1)
             if (count == capacity) {
                 resize();
             }
@@ -104,7 +104,7 @@ class Dequeue {
         }
 
         void pop_front() {
-            // TODO:: must remove the front element off of the deque.
+            // TODO:: must remove the front element off of the deque | O(1)
             if (count == 0) {
                 std::cerr << "Deque is empty" << std::endl;
                 return;
@@ -118,7 +118,7 @@ class Dequeue {
         }
 
         void pop_back() {
-            // TODO:: must remove the back element off of the deque.
+            // TODO:: must remove the back element off of the deque | O(1)
             if (count == 0) {
                 std::cerr << "Deque is empty" << std::endl;
                 return;
@@ -137,7 +137,7 @@ class Dequeue {
         }
 
         T front() {
-            // TODO:: must provide access to the front element of the deque.
+            // TODO:: must provide access to the front element of the deque | O(1)
             if (count == 0) {
                 std::cerr << "Deque is empty" << std::endl;
                 return;
@@ -146,7 +146,7 @@ class Dequeue {
         }
 
         T back() {
-            // TODO:: must provide access to the back element of the deque.
+            // TODO:: must provide access to the back element of the deque | O(1)
             if (count == 0) {
                 std::cerr << "Deque is empty" << std::endl;
                 return;
@@ -155,11 +155,12 @@ class Dequeue {
         }
 
         int size() {
+            // get size | O(1)
             return count;
         }
 
         // This for debugging 
-        void getAll() {
+        void getAll() { // O(n)
             for (int i = 0; i < count; i++) {
                 std::cout << data[(head + i) % capacity] << " ";
             }
