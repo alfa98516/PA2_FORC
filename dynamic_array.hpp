@@ -14,32 +14,34 @@ class Dynamic_Vector {
         capacity *= 2;
         T* _vect = new T[capacity];
 
-        for (size_t i = size; i < capacity; ++i) {
-            vect[i] = T();
-        }
-
-        for (int i = 0; i < size; ++i) {
+        for (size_t i = 0; i < size; ++i) {
             _vect[i] = vect[i];
         }
+
+        for (size_t i = size; i < capacity; ++i) {
+            _vect[i] = T();
+        }
+
         delete[] vect;
         vect = _vect;
     }
 
     void shrink() {
-        if (capacity > 1)
-            capacity /= 2;
-        else
+        if (capacity <= 1)
             return;
+
+        capacity /= 2;
 
         T* _vect = new T[capacity];
 
-        for (size_t i = size; i < capacity; ++i) {
-            vect[i] = T();
-        }
-
-        for (int i = 0; i < size; ++i) {
+        for (size_t i = 0; i < size; ++i) {
             _vect[i] = vect[i];
         }
+
+        for (size_t i = size; i < capacity; ++i) {
+            _vect[i] = T();
+        }
+
         delete[] vect;
         vect = _vect;
     }
