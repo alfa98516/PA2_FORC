@@ -5,6 +5,7 @@ DEQUEUE_TEST = dequeTest.cpp
 DLL_TEST = dllTest.cpp
 ARRAY_TEST = test_dynamic_array.cpp
 BST_TEST = bst_test.cpp
+HASHTABLE_TEST = hashtableTest.cpp
 
 # Header files
 ARRAY = dynamic_array.hpp
@@ -12,6 +13,7 @@ HEAP = heap.hpp
 DLL = dll.hpp 
 DEQUEUE = dequeue.hpp
 BST = self_balancing_bst.hpp
+HASHTABLE = hashtable.hpp
 WATCH = $(DLL)
 
 # Cflags
@@ -27,6 +29,7 @@ DEQUEUE_BIN = dequeue
 ARRAY_BIN = array
 DLL_BIN = dll
 BST_BIN = bst
+HASHTABLE_BIN = hashtable2
 
 a.out: $(MAIN) $(WATCH)
 	$(CC) $(CXXFLAGS) $(MAIN) -o a.out
@@ -43,8 +46,11 @@ $(DEQUEUE_BIN): $(DEQUEUE)
 $(DLL_BIN): $(DLL)
 	$(CC) $(CXXFLAGS) $(DLL_TEST) -o $(DLL_BIN)
 
-$(BST_BIN): $(DLL)
+$(BST_BIN): $(BST)
 	$(CC) $(CXXFLAGS) $(BST_TEST) -o $(BST_BIN)
+
+$(HASHTABLE_BIN): $(HASHTABLE)
+	$(CC) $(CXXFLAGS) $(HASHTABLE_TEST) -o $(HASHTABLE_BIN)
 
 
 clean:
