@@ -25,7 +25,7 @@ DataStructure:
 - Dll: dll
 - Dequeue: dequeue
 - Heap: heap2
-- Hash: hash2
+- Hash: hashtable2
 - Binary tree: bst
 
 To compile:
