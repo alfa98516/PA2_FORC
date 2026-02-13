@@ -35,6 +35,6 @@ class HashTable {
             // output size of hash table, see output section
             return count;
         }
-}
+};
 
 #endif
