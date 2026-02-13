@@ -3,19 +3,19 @@
 1. Dynamically sized array:
     * Implemented a ...
 2. Linked list data structure:
-    * Implemented a Doubly linked list
+    * Implemented a Doubly linked list.
 3. Queue, stack, OR double-ended queue data structure:
     * Implemented a deque with circular array.
 4. Heap data structure:
     * Implemented a heap with array.
 5. Hash table structure:
-
+    * Implemented a ...
 6. Self-balancing binary search tree structure:
-    * Implemented a self-balancing binary tree using left-leaning-red-black ?
+    * Implemented a self-balancing binary tree using left-leaning-red-black tree.
 
 
 ### What needs to be written in the terminal to compile and run the program. If you provide additional files for the tests, then clarify that and say how to run and verify the tests ran correctly.
-To compile dataStructure:
+DataStructure:
 - Array: array
 - Dll: dll
 - Dequeue: dequeue
@@ -23,13 +23,15 @@ To compile dataStructure:
 - Hash: hash2
 - Binary tree: bst
 
+To compile:
+
 ```bash
-make <dataStructurer>
+make <DataStructure>
 ```
 
 To test the data structer:
 ```bash
-./<dataStructure>
+./<DataStructure>
 ```
 
 To delete/clean the binary file that creates, run:

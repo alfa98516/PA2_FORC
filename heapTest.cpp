@@ -41,8 +41,3 @@ int main() {
     return 0;
 }
 
-
-/*  RUN
-g++ -std=c++98 heapTest.cpp -o heap2
-./heap2
-*/
