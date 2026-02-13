@@ -465,14 +465,14 @@ class LLRB {
         }
 
         // Made erase 
-        void erase(T key){
-            if (find(key) == NULL) return;
+        void erase(bstNode<T,U>* cursor){
+            if (cursor == NULL) return;
             if (root == NULL) return;
 
             bool deleted = false;
 
             if (root->left == NULL && root->right == NULL) {
-                if (root->key == key) {
+                if (root->key == cursor->key) {
                     delete root;
                     root = NULL;
                     treeSize--;
@@ -484,16 +484,15 @@ class LLRB {
                 root->color = RED;
             }
 
-            root = eraseHelper(root, key, deleted);
+
+            T keyToDelete = cursor->key;
+            root = eraseHelper(root, keyToDelete, deleted);
 
             if (root != NULL) {
                 root->color = BLACK;
                 root->parent = NULL;
             }
 
-            if (!deleted) {
-                std::cout << "Key not deleted: " << key << std::endl;
-            }
             if (deleted) treeSize--;
         }
 
