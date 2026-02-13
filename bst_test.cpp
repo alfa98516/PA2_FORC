@@ -220,43 +220,43 @@ void testKElement() {
     cout << "✓ K-th element passed!" << endl;
 }
 
-// void testErase() {
-//     cout << "Testing erase..." << endl;
+void testErase() {
+    cout << "Testing erase..." << endl;
     
-//     LLRB<int, string> tree;
+    LLRB<int, string> tree;
     
-//     bstNode<int, string>* n1 = tree.insert(5, "five");
-//     bstNode<int, string>* n2 = tree.insert(3, "three");
-//     bstNode<int, string>* n3 = tree.insert(7, "seven");
-//     bstNode<int, string>* n4 = tree.insert(1, "one");
-//     bstNode<int, string>* n5 = tree.insert(9, "nine");
+    bstNode<int, string>* n1 = tree.insert(5, "five");
+    bstNode<int, string>* n2 = tree.insert(3, "three");
+    bstNode<int, string>* n3 = tree.insert(7, "seven");
+    bstNode<int, string>* n4 = tree.insert(1, "one");
+    bstNode<int, string>* n5 = tree.insert(9, "nine");
     
-//     assert(tree.size() == 5);
+    assert(tree.size() == 5);
     
-//     // Erase middle element
-//     tree.erase(n1);
-//     assert(tree.size() == 4);
-//     assert(tree.find(5) == NULL);
+    // Erase middle element
+    tree.erase(n1);
+    assert(tree.size() == 4);
+    assert(tree.find(5) == NULL);
     
-//     // Verify remaining elements
-//     assert(tree.find(3) != NULL);
-//     assert(tree.find(7) != NULL);
-//     assert(tree.find(1) != NULL);
-//     assert(tree.find(9) != NULL);
+    // Verify remaining elements
+    assert(tree.find(3) != NULL);
+    assert(tree.find(7) != NULL);
+    assert(tree.find(1) != NULL);
+    assert(tree.find(9) != NULL);
     
-//     // Erase all
-//     tree.erase(n2);
-//     tree.erase(n3);
-//     tree.erase(n4);
-//     tree.erase(n5);
+    // Erase all
+    tree.erase(n2);
+    tree.erase(n3);
+    tree.erase(n4);
+    tree.erase(n5);
     
-//     cout << tree.size() << endl;
-//     assert(tree.size() == 0);
-//     assert(tree.front() == NULL);
-//     assert(tree.back() == NULL);
+    cout << tree.size() << endl;
+    assert(tree.size() == 0);
+    assert(tree.front() == NULL);
+    assert(tree.back() == NULL);
     
-//     cout << "✓ Erase passed!" << endl;
-// }
+    cout << "✓ Erase passed!" << endl;
+}
 
 void testCopyConstructor() {
     cout << "Testing copy constructor..." << endl;

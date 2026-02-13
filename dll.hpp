@@ -1,7 +1,8 @@
-#include "node.hpp"
-
 #ifndef DLL
 #define DLL
+
+#include "node.hpp"
+
 template <typename T>
 class Dll{
     private:
@@ -105,9 +106,9 @@ class Dll{
 
         //Insert new node at provided cursor node, return the new node.
         Node<T>* insert(Node<T>* cursor, const T& data){
-            if (cursor == NULL) return NULL;
-            //Don't allow inserting at the head
-            if (cursor == head) return NULL;
+            if (cursor == NULL || cursor == head) {
+                cursor = tail;
+            }
 
             Node<T>* newNode = new Node<T>(data);
             Node<T>* prevNode = cursor->prev;
