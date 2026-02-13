@@ -40,5 +40,8 @@
 # debug information files
 *.dwo
 
+# Extras
+main.cpp # kind of specific to our projet
+
 # Assignment docements
 .pdf

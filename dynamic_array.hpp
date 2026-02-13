@@ -7,8 +7,8 @@
 template <typename T>
 class Dynamic_Vector {
     T* vect;
-    size_t size; // I really have not a clue how were supposed to track the length
-                 // and size of the array
+    size_t size; // I really have not a clue how were supposed to track the
+                 // length and size of the array
     size_t capacity;
 
     void grow() {
@@ -27,35 +27,34 @@ class Dynamic_Vector {
         for (int i = 0; i < size; ++i) {
             _vect[i] = vect[i];
         }
-
         delete[] vect;
         vect = _vect;
     }
 
   public:
     /**
-     * @brief This is the base constructor, sets the capacity at 0 and the size to
-     * 32 (this skips a couple resizes)
+     * @brief This is the base constructor, sets the capacity at 0 and the
+     * size to 32 (this skips a couple resizes)
      *
      */
     Dynamic_Vector<T>()
-        : size(0), capacity(32) { // initializing at 32 to skip a couple resizes,
-                                  // this will not effect length
+        : size(0), capacity(32) { // initializing at 32 to skip a couple
+                                  // resizes, this will not effect length
         vect = new T[capacity];
     }
 
     /**
-     * @brief This constructor is kind of dumb and stupid, please use the default
-     * constructor and then just resize, stupid
+     * @brief This constructor is kind of dumb and stupid, please use the
+     * default constructor and then just resize, stupid
      * @param _capacity the capacity the user wants to initialize at
      */
     Dynamic_Vector<T>(size_t _capacity) : size(_capacity), capacity(32) {
         if (capacity < size) {
             int i = 1;
             while (i < capacity)
-                i *= 2; // round up to nearest power of 2, improves efficiency of some
-                        // functions.
-                        // amortized; this constructor still runs in O(1)
+                i *= 2; // round up to nearest power of 2, improves efficiency of
+                        // some functions. amortized; this constructor still runs in
+                        // O(1)
             capacity = i;
         }
 
@@ -74,12 +73,15 @@ class Dynamic_Vector {
         }
     }
 
+    /**
+     * @brief
+     */
     void erase(size_t idx) {
     }
 
     /**
-     * @brief Appends a new item at the end of the vector, where "end" is defined
-     * as indexing with the length variable
+     * @brief Appends a new item at the end of the vector, where "end" is
+     * defined as indexing with the length variable
      * @param item: the item were appending to the vector
      */
     void append(T item) {
@@ -89,11 +91,17 @@ class Dynamic_Vector {
         size++;
     }
 
-    T& pop();
+    /**
+     * @brief I dont do any checking for bounds, its the callers responsability
+     * @param idx: the index of the item
+     */
+    T& operator[](size_t idx) const { return vect[idx]; }
 
-    const T& operator[](size_t idx) const { return vect[idx]; }
-    T& operator[](size_t idx) { return vect[idx]; }
-    const size_t len() const { return size; }
+    /**
+     * @brief Exactly the same as the other operator[] function, this one is just for reading
+     * @param idx: the index of the item
+     */
+    const T& operator[](size_t idx) { return vect[idx]; }
 };
 
 #endif
@@ -104,7 +112,8 @@ class Dynamic_Vector {
  * @brief this was showin in class, i liked it so now i have it
  * @param out this is the outstream were outputting to (i.e. std::cout)
  * @param Vect: this is the vector were printing out
- * @returns out: it modifies it, and then returns it back, this is so "std::cout
+ * @returns out: it modifies it, and then returns it back, this is so
+ * "std::cout
  * << 1 << 4 << 6;" works.
  */
 template <typename T>

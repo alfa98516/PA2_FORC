@@ -1,57 +1,70 @@
 #include <cassert>
-#include <cstring>
-#include <cstdio>
-
 #include <iostream>
-// can use strlen, strcat, strcpy, atoi, atof, memcpy, assert
 #include "dll.hpp"
+
+using std::cout;
+using std::cin;
+using std::ws;
+
+Dll<int> lists[1000];
+Node<int>* cursors[1000];
 
 int main() {
     int q;
-    std::cin >> q;
+    cin >> q;
 
-    Dll<int> dll[1001];
-    Node<int>* cursor[1001];
-    
-    // Initialize all cursors to the tail (sentinel node)
-    for (int i = 0; i <= 1000; i++) {
-        cursor[i] = dll[i].back();
+    for (int i = 0; i < 1000; i++) {
+        cursors[i] = lists[i].back();
     }
 
     for (int i = 0; i < q; i++) {
-        int id;
+        int instance;
+        cin >> instance;
+        instance--;
+        cin >> ws;
         char op;
-        std::cin >> id >> op;
+        cin >> op;
 
         if (op == 'a') {
-            int copy_id;
-            std::cin >> copy_id;
-            dll[id] = dll[copy_id];
-            cursor[id] = dll[id].back(); // Reset cursor to sentinel after assignment
-        } else if (op == 'f') {
-            cursor[id] = dll[id].front();
-        } else if (op == 'b') {
-            cursor[id] = dll[id].back();
-        } else if (op == 'i') {
+            int other;
+            cin >> other;
+            other--;
+            lists[instance] = lists[other];
+            cursors[instance] = lists[instance].back();
+        }
+        else if (op == 'f') {
+            cursors[instance] = lists[instance].front();
+        }
+        else if (op == 'b') {
+            cursors[instance] = lists[instance].back();
+        }
+        else if (op == 'i') {
             int value;
-            std::cin >> value;
-            cursor[id] = dll[id].insert(cursor[id], value);
-        } else if (op == 'e') {
-            cursor[id] = dll[id].erase(cursor[id]);
-        } else if (op == '>') {
-            cursor[id] = dll[id].successor(cursor[id]);
-        } else if (op == '<') {
-            cursor[id] = dll[id].predecessor(cursor[id]);
-        } else if (op == 'g') {
-            std::cout << cursor[id]->data << std::endl;
-        } else if (op == 's') {
-            int x;
-            std::cin >> x;
-            cursor[id]->data = x;
-        } else if (op == 'z') {
-            std::cout << dll[id].size() << std::endl;
+            cin >> value;
+            cursors[instance] = lists[instance].insert(cursors[instance], value);
+        }
+        else if (op == 'e') {
+            cursors[instance] = lists[instance].erase(cursors[instance]);
+        }
+        else if (op == '>') {
+            cursors[instance] = lists[instance].successor(cursors[instance]);
+        }
+        else if (op == '<') {
+            cursors[instance] = lists[instance].predecessor(cursors[instance]);
+        }
+        else if (op == 'g') {
+            cout << cursors[instance]->data << '\n';
+        }
+        else if (op == 's') {
+            int value;
+            cin >> value;
+            cursors[instance]->data = value;
+        }
+        else if (op == 'z') {
+            cout << lists[instance].size() << '\n';
+        }
+        else {
+            assert(false);
         }
     }
-
-    return 0;
 }

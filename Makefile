@@ -10,6 +10,7 @@ ARRAY = dynamic_array.hpp
 HEAP = heap.hpp 
 DLL = dll.hpp 
 DEQUEUE = dequeue.hpp
+WATCH = $(DLL)
 
 # Cflags
 STD = -std=c++98
@@ -24,7 +25,7 @@ DEQUEUE_BIN = dequeue
 ARRAY_BIN = array
 DLL_BIN = dll
 
-a.out: $(MAIN)
+a.out: $(MAIN) $(WATCH)
 	$(CC) $(CXXFLAGS) $(MAIN) -o a.out
 
 $(ARRAY_BIN): $(ARRAY) 
@@ -42,4 +43,3 @@ $(DLL_BIN): $(DLL)
 
 clean:
 	rm -f $(HEAP_BIN) $(DEQUEUE_BIN) $(ARRAY_BIN) $(DLL_BIN) *.out
-
