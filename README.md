@@ -1,7 +1,12 @@
 # Data Structures
+Group members:
+- Alfa Reynisdóttir
+- Auðunn Daníel Jónsson
+- Karen Yin Guðnadóttir
+
 ### What abstract data structures you implemented and a general summary of how they are implemented. For example, specify the growth factor of your dynamically sized array, specify what kind of self-balancing binary search tree you used, mention any data structures you used to implement other data structures. Imagine that you are documenting your library enough that other programmers can use it.
 1. Dynamically sized array:
-    * Implemented a ...
+    * Implemented a dynamically size array.
 2. Linked list data structure:
     * Implemented a Doubly linked list.
 3. Queue, stack, OR double-ended queue data structure:
