@@ -1,6 +1,6 @@
 #include <cassert>
-#include <cstring>
 #include <cstdio>
+#include <cstring>
 
 #include <iostream>
 // can use strlen, strcat, strcpy, atoi, atof, memcpy, assert
@@ -10,7 +10,7 @@ int main() {
     int q;
     std::cin >> q;
 
-    HashTable<int> ht[1001];
+    HashMap<int, int> ht[1001];
 
     for (int i = 0; i < q; i++) {
         int id;
@@ -27,22 +27,27 @@ int main() {
             std::cin >> key >> value;
             ht[id].insert(key, value);
         } else if (op == 'e') {
-            ht[id].erase();
+            int key;
+            std::cin >> key;
+            ht[id].remove(key);
         } else if (op == 'g') {
             int key;
-            int value;
-            std::cin >> key >> value;
-            ht[id].get(key, value);
+            std::cin >> key;
+            int value = ht[id].find(key);
+            if (ht[id].contains(key))
+                std::cout << value << '\n';
+            else
+                std::cout << "-\n";
         } else if (op == 's') {
             int key;
             int value;
             std::cin >> key >> value;
-            ht[id].set(key, value);
+            ht[id].update(key, value);
         } else if (op == 'z') {
-            ht[id].size();
+            size_t size = ht[id].size();
+            std::cout << size << '\n';
         }
     }
 
     return 0;
 }
-

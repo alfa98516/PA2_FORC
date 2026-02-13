@@ -44,4 +44,5 @@
 main.cpp # kind of specific to our projet
 
 # Assignment docements
-.pdf
+*.pdf
+.clang-format

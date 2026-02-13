@@ -92,7 +92,7 @@ class Dynamic_Vector {
     Dynamic_Vector<T>(size_t _capacity) : size(_capacity), capacity(32) {
         if (capacity < size) {
             int i = 1;
-            while (i < capacity)
+            while (i < size)  // FIXED: was "i < capacity", should be "i < size"
                 i *= 2; // round up to nearest power of 2, improves efficiency of
                         // some functions. amortized; this constructor still runs in
                         // O(1)

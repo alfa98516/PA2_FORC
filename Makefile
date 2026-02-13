@@ -30,7 +30,7 @@ DEQUEUE_BIN = dequeue
 ARRAY_BIN = array
 DLL_BIN = dll
 BST_BIN = bst
-HASHTABLE_BIN = hashtable2
+HASHTABLE_BIN = hashtable
 
 a.out: $(MAIN) $(WATCH)
 	$(CC) $(CXXFLAGS) $(MAIN) -o a.out
