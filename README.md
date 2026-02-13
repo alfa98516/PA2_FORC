@@ -1,5 +1,5 @@
 # Data Structures
-Group members:
+#### Group members:
 - Alfa Reynisdóttir
 - Auðunn Daníel Jónsson
 - Karen Yin Guðnadóttir
@@ -20,7 +20,7 @@ Group members:
 
 
 ### What needs to be written in the terminal to compile and run the program. If you provide additional files for the tests, then clarify that and say how to run and verify the tests ran correctly.
-DataStructure:
+#### DataStructure:
 - Array: array
 - Dll: dll
 - Dequeue: dequeue
@@ -28,18 +28,18 @@ DataStructure:
 - Hash: hashtable2
 - Binary tree: bst
 
-To compile:
+#### To compile:
 
 ```bash
 make <DataStructure>
 ```
 
-To test the data structer:
+#### To test the data structer:
 ```bash
 ./<DataStructure>
 ```
 
-To delete/clean the binary file that creates, run:
+#### To delete/clean the binary file that creates, run:
 ```bash
 make clean
 ```
