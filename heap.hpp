@@ -37,6 +37,7 @@ class MinHeap {
         }
 
         void swap(T *a, T *b) {
+            // O(1)
             T temp = *a;
             *a = *b;
             *b = temp;

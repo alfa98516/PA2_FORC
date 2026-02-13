@@ -103,6 +103,7 @@ class LLRB {
         }
 
 
+        // Insert in correct bst place.
         bstNode<T,U>* insertHelper(bstNode<T,U>* node, const T& key, const U& value, bstNode<T,U>* parent){
             //standard insert
             if (node == NULL) {
@@ -156,7 +157,7 @@ class LLRB {
             }
         }
 
-
+        // Ensures bst follows correct llrb tree structure
         bstNode<T,U>* fixup(bstNode<T,U>* node){
             // Fix right-leaning red nodes.
             if (isRed(node->right) && !isRed(node->left)){
@@ -176,12 +177,14 @@ class LLRB {
             return node;
         }
 
+        // swap the data of nodes
         void swapData(bstNode<T,U>* u, bstNode<T,U>* v){
             myswap(u->key, v->key);
             myswap(u->originalKey, v->originalKey);
             myswap(u->value, v->value);
         }
 
+        // finds and erases the node with given key, ensuring we keep correct llrb structure
         bstNode<T,U>* eraseHelper(bstNode<T,U>* node, const T& key, bool& deleted){
             if (node == NULL) return NULL;
 
@@ -342,7 +345,7 @@ class LLRB {
             return newNode;
         }
 
-        // Finds node with given key if exists
+        
         bstNode<T,U>* findHelper(bstNode<T,U>* node, const T& key) const{
             if (node == NULL) return NULL;
 
@@ -363,7 +366,6 @@ class LLRB {
             }
         }
 
-        // find the node with the smallest key greater or equal to given key.
         bstNode<T,U>* lowerBoundHelper(bstNode<T,U>* node, const T& key, bstNode<T,U>* candidate) const{
             if (node == NULL) return candidate;
 
@@ -375,7 +377,6 @@ class LLRB {
             }
         }
 
-        // find the node with the smallest key strictly greater than the given key.
         bstNode<T,U>* upperBoundHelper(bstNode<T,U>* node, const T& key, bstNode<T,U>* candidate) const{
             if (node == NULL) return candidate;
 
@@ -387,7 +388,6 @@ class LLRB {
             }
         }
 
-        // find the node from the given index in lef-to-right order.
         bstNode<T,U>* kElementHelper(bstNode<T,U>* node, int index) const {
             if (node == NULL) return NULL;
 
@@ -408,16 +408,19 @@ class LLRB {
             }
         }
     public:
+        // constructor
         LLRB(){
             root = NULL;
             lastInserted = NULL;
             treeSize = 0;
         }
 
+        // destructor
         ~LLRB(){
             destroyTree(root);
         }
 
+        // copy constructor
         LLRB(const LLRB<T,U>& other){
             root = NULL;
             lastInserted = NULL;
@@ -429,6 +432,7 @@ class LLRB {
             }
         }
 
+        // assignment operator
         LLRB<T,U>& operator=(const LLRB<T,U>&other) {
             if (this == &other) return *this;
 
@@ -446,33 +450,39 @@ class LLRB {
             return *this;
         }
 
+        // Finds node with given key if exists
         bstNode<T,U>* find(const T& key) const{
             return findHelper(root, key);
         }
 
+        // find the node with the smallest key greater or equal to given key.
         bstNode<T,U>* lowerBound(const T& key) const{
             return lowerBoundHelper(root, key, NULL);
         }
 
+        // find the node with the smallest key strictly greater than the given key.
         bstNode<T,U>* upperBound(const T& key) const{
             return upperBoundHelper(root, key, NULL);
         }
 
+        // insert node with given key and value
         bstNode<T,U>* insert(const T& key, const U& value){
             root = insertHelper(root, key, value, NULL);
             root->color = BLACK; //Root always black
             return lastInserted;
         }
 
-        // Made erase 
-        void erase(T key){
-            if (find(key) == NULL) return;
+        // erase takes in node to delete
+        void erase(bstNode<T,U>* cursor){
+            if (cursor == NULL) return;
             if (root == NULL) return;
 
             bool deleted = false;
 
+            // if trying to delete the root and root is only node,
+            // delete normally
             if (root->left == NULL && root->right == NULL) {
-                if (root->key == key) {
+                if (root->key == cursor->key) {
                     delete root;
                     root = NULL;
                     treeSize--;
@@ -484,28 +494,30 @@ class LLRB {
                 root->color = RED;
             }
 
-            root = eraseHelper(root, key, deleted);
+
+            T keyToDelete = cursor->key;
+            root = eraseHelper(root, keyToDelete, deleted);
 
             if (root != NULL) {
                 root->color = BLACK;
                 root->parent = NULL;
             }
 
-            if (!deleted) {
-                std::cout << "Key not deleted: " << key << std::endl;
-            }
             if (deleted) treeSize--;
         }
 
-
+        // Finds the first node in left-to-right order
         bstNode<T,U>* front() const{
             return findMin(root);
         }
 
+        // Finds the last node in left-to-right order
         bstNode<T,U>* back() const{
             return findMax(root);
         }
 
+        // Returns node before given cursor 
+        // (node with largest key lower than given cursor)
         bstNode<T,U>* predecessor(bstNode<T,U>* cursor) const{
             if (cursor == NULL) return NULL;
             if (cursor->left != NULL) {
@@ -523,6 +535,8 @@ class LLRB {
             return parent;
         }
 
+        // Returns node after given cursor
+        // (node with smallest key larger than given cursor)
         bstNode<T,U>* successor(bstNode<T,U>* cursor) const{
             if (cursor == NULL) return NULL;
 
@@ -574,24 +588,14 @@ class LLRB {
             return rank;
         }
 
+        // find the node from the given index in lef-to-right order.
         bstNode<T,U>* kElement(int index) const{
             return kElementHelper(root,index);
         }
 
+        // returns size (how many nodes in tree)
         int size() const{
             return treeSize;
         }
-
-        void printInOrder(bstNode<T,U>* node) {
-            if (node == NULL) return;
-            printInOrder(node->left);
-            std::cout << "(" << node->key << ", " << node->value << ") ";
-            printInOrder(node->right);
-        }
-
-        bstNode<T,U>* getRoot(){
-            return root;
-        }
 };
-
 #endif

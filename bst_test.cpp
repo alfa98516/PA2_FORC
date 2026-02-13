@@ -54,7 +54,7 @@ int main() {
         }
         else if (op == 'e') {
             if (cursors[instance] != NULL) {
-                trees[instance].erase(cursors[instance]->key);
+                trees[instance].erase(cursors[instance]);
                 cursors[instance] = NULL; // or other sentinel value
             }
         }
