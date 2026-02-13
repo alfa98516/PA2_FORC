@@ -2,8 +2,7 @@
 #define DYNAMIC_ARRAY
 #include <cstddef>
 #include <cstdlib>
-#include <ostream>
-
+#include <iostream>
 template <typename T>
 class Dynamic_Vector {
     T* vect;
@@ -29,6 +28,31 @@ class Dynamic_Vector {
         }
         delete[] vect;
         vect = _vect;
+    }
+
+    /**
+     * @brief this is used in both erase and insert, it moves items to their correct position
+     * @param idx: the index where were inserting/deleting
+     * @param mode: either 1 or 0, 1 means were inserting, 0 means were erasing.
+     */
+    void fix(size_t idx, int mode) {
+        if (mode) {
+            size++;
+            if (size >= capacity) grow();
+
+            for (int i = size; i > idx; --i) {
+                vect[i] = vect[i - 1];
+            }
+        } else {
+
+            for (int i = idx; i < size; ++i) {
+
+                vect[i] = vect[i + 1];
+            }
+
+            size--;
+            if (size <= capacity / 4) shrink();
+        }
     }
 
   public:
@@ -65,8 +89,10 @@ class Dynamic_Vector {
      * @brief Copy constructor, pretty standard.
      * @param other: This is the Dynamic_Vector were copying from.
      */
-    Dynamic_Vector(const Dynamic_Vector<T>& other) {
+    Dynamic_Vector(const Dynamic_Vector<T>& other) : size(other.len()), capacity(other.getCapacity()) {
         vect = new T[capacity];
+
+        capacity = other.len();
 
         for (size_t i = 0; i < size; ++i) {
             vect[i] = other[i];
@@ -77,6 +103,10 @@ class Dynamic_Vector {
      * @brief
      */
     void erase(size_t idx) {
+        if (vect[idx] == NULL) return;
+        if (idx > size) return;
+        vect[idx] = NULL;
+        fix(idx, 0);
     }
 
     /**
@@ -92,16 +122,90 @@ class Dynamic_Vector {
     }
 
     /**
+     * @brief inserts an element at a given index
+     * @param idx: the index the caller wants to insert at
+     * @param item: the item the caller is inserting at
+     */
+    void insert(size_t idx, T item) {
+        bool resized = 0;
+        if (idx > size) {
+            bool resized = 1;
+            size = idx;
+            while (size >= capacity) // if the caller inputs an absurdly large index, its just gonna keep resizing, if this crashes their computer, thats on the caller.
+                grow();
+
+            vect[idx] = item;
+        }
+        if (vect[idx] != NULL) {
+            fix(idx, 1);
+            vect[idx] = item;
+        } else {
+            std::cout << "its null baby\n";
+            if (size == 0) size = 1;
+            vect[idx] = item;
+        }
+    }
+
+    T pop() {
+        T item = vect[size - 1];
+        vect[size - 1] = NULL;
+        size--;
+        if (size <= capacity / 4) shrink();
+        return item;
+    }
+
+    /**
+     * @brief its a damn len function, figure it out yourself
+     * @returns size: it returns the size
+     */
+    const size_t len() const { return size; }
+
+    /**
      * @brief I dont do any checking for bounds, its the callers responsability
+     *         Also you should just use the insert function or the append function, i have no way to check if the caller is setting to null
+     *         This overwrites whatever is at the given index
      * @param idx: the index of the item
      */
-    T& operator[](size_t idx) const { return vect[idx]; }
+    T& operator[](size_t idx) { return vect[idx]; }
 
     /**
      * @brief Exactly the same as the other operator[] function, this one is just for reading
      * @param idx: the index of the item
      */
-    const T& operator[](size_t idx) { return vect[idx]; }
+    const T& operator[](size_t idx) const { return vect[idx]; }
+
+    void operator+(T rhs) {
+        append(rhs);
+    }
+
+    Dynamic_Vector<T>& operator=(const Dynamic_Vector<T>& other) {
+        if (this == &other) return *this;
+
+        delete[] vect;
+        size = other.len();
+        capacity = other.getCapacity();
+        for (int i = 0; i < size; ++i) {
+            vect[i] = other[i];
+        }
+
+        return *this;
+    }
+
+    const size_t getCapacity() const {
+        return capacity;
+    }
+
+    void resize(size_t _size) {
+        while (_size >= capacity) // dont resize to absurdly large !! thats stupid !!
+            grow();
+        if (_size < size) {
+            for (int i = size; i > _size; --i) {
+
+                vect[i] = NULL;
+            }
+        }
+        size = _size;
+    }
 };
 
 #endif

@@ -25,11 +25,11 @@ int main() {
             int other;
             cin >> other;
             other--; // change to 0-based index
-            Dynamic_Vector<int> tmp = Dynamic_Vector<int>(vecs[instance]);
-            vecs[other] = tmp;
+            vecs[instance] = vecs[other];
         } else if (op == '+') {
             int value;
             cin >> value;
+            vecs[instance] + value;
 
         } else if (op == '-') {
             int ret = vecs[instance].pop();
@@ -37,7 +37,8 @@ int main() {
         } else if (op == 'i') {
             int index, value;
             cin >> index >> value;
-            vecs[instance][index] = value;
+            vecs[instance].insert(index, value);
+
         } else if (op == 'e') {
             int index;
             cin >> index;
@@ -45,7 +46,6 @@ int main() {
         } else if (op == 'g') {
             int index;
             cin >> index;
-            // get
             std::cout << vecs[instance][index] << '\n';
         } else if (op == 's') {
             int index, value;
@@ -55,9 +55,12 @@ int main() {
         } else if (op == 'r') {
             int sz;
             cin >> sz;
-            // resize
+
+            vecs[instance].resize(sz);
+
         } else if (op == 'p') {
             // print
+            std::cout << vecs[instance].len() << '\n';
             std::cout << vecs[instance] << '\n';
         } else {
             assert(false);
