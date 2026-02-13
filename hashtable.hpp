@@ -1,40 +1,91 @@
-#include "node.hpp"
+#ifndef HASHMAP
+#define HASHMAP
+#include "dynamic_array.hpp"
+template <typename K, typename V>
+class HashMap {
 
-#ifndef HT
-#define HT
+    class Node {
+      public: // everything is just nicer public, the user wont ever see a node anyway
+        V val;
+        K key;
+        Node* next;
 
-template <typename T>
-class HashTable {
-    private:
+        Node() { next = NULL; }
 
-        int count;
-    public:
+        Node(V _val, K _key) : val(_val), key(_key) {}
 
-        void insert(int key, T value) {
-            // insert a key-value pair to the hash table if the key does not exist, otherwise do nothing
+        Node(V _val, K _key, Node* _next) : val(_val), key(_key), next(_next) {}
+    };
 
+    class Bucket {
+      public: // again, user wont be able to touch this, so just nicer to keep it public
+        Node* tail;
+        Node* head;
+
+        Bucket() : tail(NULL), head(NULL) {}
+
+        Bucket(Node* _tail, Node* _head) : tail(_tail), head(_head) {}
+
+        /**
+         * @brief this is NOT a user friendly insert function, but I AM the user and i DONT CARE.
+         * @param key: the key im inserting
+         * @param val: the value im inserting
+         */
+        void insert(K key, V val) {
+            Node* newNode = Node(key, val);
+            newNode->next = head; // opted for doing insert at front, as this is a very basic linked list.
+            head = newNode;
+            if (tail == NULL)
+                tail = newNode;
         }
 
-        void erase() {
-            // erase a given key from the hash table which is guaranteed to exist
+        size_t size() {
+            Node* node = head;
+            size_t length = 0;
+            while (node != NULL) {
+                length++;
+                node = node->next;
+            }
+            return length;
         }
 
-        T get(int key, T value) {
-            // element access, get, output the value associated with the given key if it exists, see output section
-            // if hash table empty return  type (T())
-            return T();
+        bool contains(K key) {
+            Node* node = head;
+            while (node != NULL) {
 
-            // else return value
+                if (node->key == key) return true;
+                node = node->next;
+            }
+            return false;
         }
 
-        void set(int key, T value) {
-            // element access, set, set the value associated with a given key which is guaranteed to exist
+        V find(K key) {
+            Node* node = head;
+            while (node != NULL) {
+                if (node->key == key) {
+                    return node->val;
+                }
+                node = node->next;
+            }
+            return NULL;
         }
 
-        int size () {
-            // output size of hash table, see output section
-            return count;
+      private:
+        Node* findNode(K key) {
+            Node* node = head;
+            while (node != NULL) {
+                if (node->key == key) return node;
+                node = node->next;
+            }
+            return NULL;
         }
+    };
+
+    Dynamic_Vector<Bucket> bucket; // yyaaayy
+    int capacity;
+
+  public:
+    HashMap<K, V>() : capacity(32) { // i dont really know what a smart starting size is for a HashMap is.
+    }
 };
-
 #endif

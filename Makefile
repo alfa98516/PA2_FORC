@@ -20,8 +20,9 @@ WATCH = $(DLL)
 STD = -std=c++98
 WARNINGS = -Wpedantic
 SYMBOLS = -g
+SANITIZE = -fsanitize=undefined
 CC = g++
-CXXFLAGS = $(SYMBOLS) $(WARNINGS) $(STD)
+CXXFLAGS = $(SYMBOLS) $(WARNINGS) $(STD) $(SANITIZE)
 
 # Binary files
 HEAP_BIN = heap2

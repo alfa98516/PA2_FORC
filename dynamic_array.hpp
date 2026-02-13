@@ -13,6 +13,11 @@ class Dynamic_Vector {
     void grow() {
         capacity *= 2;
         T* _vect = new T[capacity];
+
+        for (size_t i = size; i < capacity; ++i) {
+            vect[i] = T();
+        }
+
         for (int i = 0; i < size; ++i) {
             _vect[i] = vect[i];
         }
@@ -21,8 +26,17 @@ class Dynamic_Vector {
     }
 
     void shrink() {
-        capacity /= 2;
+        if (capacity > 1)
+            capacity /= 2;
+        else
+            return;
+
         T* _vect = new T[capacity];
+
+        for (size_t i = size; i < capacity; ++i) {
+            vect[i] = T();
+        }
+
         for (int i = 0; i < size; ++i) {
             _vect[i] = vect[i];
         }
@@ -36,16 +50,16 @@ class Dynamic_Vector {
      * @param mode: either 1 or 0, 1 means were inserting, 0 means were erasing.
      */
     void fix(size_t idx, int mode) {
-        if (mode) {
-            size++;
-            if (size >= capacity) grow();
+        if (mode) { // insert mode
+            if (size + 1 > capacity) grow();
 
-            for (int i = size; i > idx; --i) {
+            for (size_t i = size; i > idx; --i) {
                 vect[i] = vect[i - 1];
             }
-        } else {
+            size++;
+        } else { // erase mode
 
-            for (int i = idx; i < size; ++i) {
+            for (int i = idx; i < size - 1; ++i) {
 
                 vect[i] = vect[i + 1];
             }
@@ -65,6 +79,9 @@ class Dynamic_Vector {
         : size(0), capacity(32) { // initializing at 32 to skip a couple
                                   // resizes, this will not effect length
         vect = new T[capacity];
+        for (int i = 0; i < capacity; ++i) {
+            vect[i] = T();
+        }
     }
 
     /**
@@ -83,6 +100,9 @@ class Dynamic_Vector {
         }
 
         vect = new T[capacity];
+        for (int i = 0; i < capacity; ++i) {
+            vect[i] = T();
+        }
     }
 
     /**
@@ -92,10 +112,12 @@ class Dynamic_Vector {
     Dynamic_Vector(const Dynamic_Vector<T>& other) : size(other.len()), capacity(other.getCapacity()) {
         vect = new T[capacity];
 
-        capacity = other.len();
-
         for (size_t i = 0; i < size; ++i) {
             vect[i] = other[i];
+        }
+
+        for (size_t i = size; i < capacity; ++i) {
+            vect[i] = T();
         }
     }
 
@@ -103,9 +125,8 @@ class Dynamic_Vector {
      * @brief
      */
     void erase(size_t idx) {
-        if (vect[idx] == NULL) return;
-        if (idx > size) return;
-        vect[idx] = NULL;
+        if (idx >= size) return;
+        vect[idx] = T();
         fix(idx, 0);
     }
 
@@ -127,28 +148,13 @@ class Dynamic_Vector {
      * @param item: the item the caller is inserting at
      */
     void insert(size_t idx, T item) {
-        bool resized = 0;
-        if (idx > size) {
-            bool resized = 1;
-            size = idx;
-            while (size >= capacity) // if the caller inputs an absurdly large index, its just gonna keep resizing, if this crashes their computer, thats on the caller.
-                grow();
-
-            vect[idx] = item;
-        }
-        if (vect[idx] != NULL) {
-            fix(idx, 1);
-            vect[idx] = item;
-        } else {
-            std::cout << "its null baby\n";
-            if (size == 0) size = 1;
-            vect[idx] = item;
-        }
+        fix(idx, 1);
+        vect[idx] = item;
     }
 
     T pop() {
         T item = vect[size - 1];
-        vect[size - 1] = NULL;
+        vect[size - 1] = T();
         size--;
         if (size <= capacity / 4) shrink();
         return item;
@@ -174,6 +180,8 @@ class Dynamic_Vector {
      */
     const T& operator[](size_t idx) const { return vect[idx]; }
 
+    const size_t getCapacity() const { return capacity; }
+
     void operator+(T rhs) {
         append(rhs);
     }
@@ -181,31 +189,30 @@ class Dynamic_Vector {
     Dynamic_Vector<T>& operator=(const Dynamic_Vector<T>& other) {
         if (this == &other) return *this;
 
-        delete[] vect;
-        size = other.len();
-        capacity = other.getCapacity();
-        for (int i = 0; i < size; ++i) {
-            vect[i] = other[i];
+        T* new_vect = new T[other.getCapacity()];
+        for (size_t i = 0; i < other.len(); ++i) {
+            new_vect[i] = other[i];
         }
 
+        delete[] vect;
+        vect = new_vect;
+        size = other.len();
+        capacity = other.getCapacity();
         return *this;
     }
 
-    const size_t getCapacity() const {
-        return capacity;
-    }
-
     void resize(size_t _size) {
-        while (_size >= capacity) // dont resize to absurdly large !! thats stupid !!
+        while (_size > capacity) // dont resize to absurdly large !! thats stupid !!
             grow();
-        if (_size < size) {
-            for (int i = size; i > _size; --i) {
-
-                vect[i] = NULL;
+        if (_size > size) {
+            for (int i = size; i < _size; ++i) {
+                vect[i] = T();
             }
         }
         size = _size;
     }
+
+    ~Dynamic_Vector<T>() { delete[] vect; }
 };
 
 #endif
@@ -222,7 +229,12 @@ class Dynamic_Vector {
  */
 template <typename T>
 std::ostream& operator<<(std::ostream& out, const Dynamic_Vector<T>& Vect) {
+
     for (int i = 0; i < Vect.len(); ++i) {
+        if (Vect.len() == i + 1) {
+            out << Vect[i];
+            continue;
+        }
         out << Vect[i] << " ";
     }
     return out;

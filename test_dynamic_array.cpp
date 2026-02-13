@@ -33,7 +33,6 @@ int main() {
 
         } else if (op == '-') {
             int ret = vecs[instance].pop();
-            cout << ret << '\n';
         } else if (op == 'i') {
             int index, value;
             cin >> index >> value;
@@ -46,7 +45,7 @@ int main() {
         } else if (op == 'g') {
             int index;
             cin >> index;
-            std::cout << vecs[instance][index] << '\n';
+            cout << vecs[instance][index] << '\n';
         } else if (op == 's') {
             int index, value;
             cin >> index >> value;
@@ -60,8 +59,8 @@ int main() {
 
         } else if (op == 'p') {
             // print
-            std::cout << vecs[instance].len() << '\n';
-            std::cout << vecs[instance] << '\n';
+            cout << vecs[instance].len() << '\n';
+            cout << vecs[instance] << '\n';
         } else {
             assert(false);
         }

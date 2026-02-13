@@ -1,0 +1,17 @@
+#ifndef HASHMAP
+#define HASHMAP
+
+template <typename K, typename V>
+class HashMap {
+
+    class node {
+
+        V val;
+        K key;
+        node* next;
+
+      public:
+        node(T _val) {}
+    };
+};
+#endif
