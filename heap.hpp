@@ -23,7 +23,6 @@ class MinHeap {
             }
             delete[] heap;
             heap = temp;
-            std::cout << "Resize success" << std::endl;
         }
 
         void shrink() {
@@ -35,7 +34,6 @@ class MinHeap {
             }
             delete[] heap;
             heap = temp;
-            std::cout << "Shrinking success" << std::endl;
         }
 
         void swap(T *a, T *b) {
@@ -99,7 +97,6 @@ class MinHeap {
         void push(T data) {
             // TODO:: must insert an element to the heap.
             if (count == capacity) {
-                std::cout << "Heap is full" << std::endl;
                 resize();
             }
             heap[count] = data;
@@ -114,6 +111,9 @@ class MinHeap {
 
         void pop() { // if the function only pops it (not return also)
             // TODO:: must remove the smallest element from the heap.
+            if (count == 0) {
+                return;
+            }
             heap[0] = heap[count - 1];
             count--;
 
@@ -129,7 +129,6 @@ class MinHeap {
         T peek() {
             // TODO:: must provide access to the smallest element in the heap | O(1)
             if (count == 0) {
-                std::cerr << "Heap is empty" << std::endl;
                 return T();
             }
             return heap[0];
