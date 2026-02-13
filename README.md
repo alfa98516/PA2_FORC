@@ -15,7 +15,7 @@
 
 
 ### What needs to be written in the terminal to compile and run the program. If you provide additional files for the tests, then clarify that and say how to run and verify the tests ran correctly.
-To compile dataStructer:
+To compile dataStructure:
 - Array: array
 - Dll: dll
 - Dequeue: dequeue
@@ -24,12 +24,12 @@ To compile dataStructer:
 - Binary tree: bst
 
 ```bash
-make <dataStructer>
+make <dataStructurer>
 ```
 
 To test the data structer:
 ```bash
-./<dataStructer>
+./<dataStructure>
 ```
 
 To delete/clean the binary file that creates, run:
