@@ -37,7 +37,7 @@ $(DEQUEUE_BIN): $(DEQUEUE)
 	$(CC) $(CXXFLAGS) $(DEQUEUE_TEST) -o $(DEQUEUE_BIN)
 
 $(DLL_BIN): $(DLL)
-	g++ -std=c++98 $(DLL_TEST) -o $(DLL_BIN)
+	$(CC) $(CXXFLAGS) $(DLL_TEST) -o $(DLL_BIN)
 
 
 clean:

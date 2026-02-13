@@ -10,41 +10,44 @@ int main() {
     int q;
     std::cin >> q;
 
-    Dll<int> dll[1000];
-
+    Dll<int> dll[1001];
+    Node<int>* cursor[1001];
+    
+    // Initialize all cursors to the tail (sentinel node)
+    for (int i = 0; i <= 1000; i++) {
+        cursor[i] = dll[i].back();
+    }
 
     for (int i = 0; i < q; i++) {
         int id;
         char op;
         std::cin >> id >> op;
-        Node<int>* node = dll[id].front();
 
         if (op == 'a') {
             int copy_id;
             std::cin >> copy_id;
             dll[id] = dll[copy_id];
+            cursor[id] = dll[id].back(); // Reset cursor to sentinel after assignment
         } else if (op == 'f') {
-            std::cout << dll[id].front()->data << std::endl;
+            cursor[id] = dll[id].front();
         } else if (op == 'b') {
-            std::cout << dll[id].back()->data << std::endl;
+            cursor[id] = dll[id].back();
         } else if (op == 'i') {
-            dll[id].insert(node, 10);
+            int value;
+            std::cin >> value;
+            cursor[id] = dll[id].insert(cursor[id], value);
         } else if (op == 'e') {
-            dll[id].erase(node);
+            cursor[id] = dll[id].erase(cursor[id]);
         } else if (op == '>') {
-            dll[id].successor(node);
+            cursor[id] = dll[id].successor(cursor[id]);
         } else if (op == '<') {
-            dll[id].predecessor(node);
+            cursor[id] = dll[id].predecessor(cursor[id]);
         } else if (op == 'g') {
-            if (node != NULL)
-                std::cout << node->data << std::endl;
+            std::cout << cursor[id]->data << std::endl;
         } else if (op == 's') {
             int x;
             std::cin >> x;
-            if (node != NULL) {
-                node->data = x;
-                std::cout << node->data << std::endl;
-            }
+            cursor[id]->data = x;
         } else if (op == 'z') {
             std::cout << dll[id].size() << std::endl;
         }
