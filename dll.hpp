@@ -1,7 +1,8 @@
-#include "node.hpp"
-
 #ifndef DLL
 #define DLL
+
+#include "node.hpp"
+
 template <typename T>
 class Dll{
     private:
@@ -10,6 +11,7 @@ class Dll{
         int list_size;
 
     public:
+        //base constructor for initializing an empty dll
         Dll(){
             head = new Node<T>();
             tail = new Node<T>();
@@ -18,6 +20,7 @@ class Dll{
             list_size = 0;
         }
 
+        //deconstructor to avoid memory leaks
         ~Dll(){
             Node<T>* temp = head;
             while (temp != NULL) {
@@ -26,7 +29,7 @@ class Dll{
                 temp = next;
             }
         }
-
+        //deep copy constructror
         Dll(const Dll& other){
             head = new Node<T>();
             tail = new Node<T>();
@@ -37,6 +40,7 @@ class Dll{
             Node<T>* otherNode = other.head->next;
             Node<T>* last = head;
             while (otherNode != other.tail) {
+                //make new node with data of dll being copied
                 Node<T>* newNode = new Node<T>(otherNode->data);
 
                 last->next = newNode;
@@ -51,6 +55,7 @@ class Dll{
             tail->prev = last;
         }
 
+        //assignment operator
         Dll<T>& operator=(const Dll<T>& other) {
             if (this == &other) return*this;
 
@@ -86,6 +91,7 @@ class Dll{
             return *this;
         }
 
+        //Gets first node (not a sentinel node)
         Node<T>* front() const{
             if(head->next != tail){
                 return head->next;
@@ -93,13 +99,16 @@ class Dll{
             return NULL;
         }
 
+        //Gets the last node (tail)
         Node<T>* back() const{
             return tail;
         }
 
-        Node<T>* insert( Node<T>* cursor, const T& data){
-            if (cursor == NULL) return NULL;
-            if (cursor == head) return NULL;
+        //Insert new node at provided cursor node, return the new node.
+        Node<T>* insert(Node<T>* cursor, const T& data){
+            if (cursor == NULL || cursor == head) {
+                cursor = tail;
+            }
 
             Node<T>* newNode = new Node<T>(data);
             Node<T>* prevNode = cursor->prev;
@@ -114,6 +123,7 @@ class Dll{
             return newNode;
         }
 
+        //Remove the provided cursor node, return the node after provided cursor.
         Node<T>* erase(Node<T>* cursor){
             if (cursor == NULL) return NULL;
             if (cursor == head) return NULL;
@@ -132,12 +142,14 @@ class Dll{
             return nextNode;
         }
 
+        //Gets the next node of the provided cursor node
         Node<T>* successor(Node<T>* cursor){
             if (cursor == NULL) return NULL;
             if (cursor == tail) return NULL;
             return cursor->next;
         }
 
+        //Gets the previous node of the provided cursor node
         Node<T>* predecessor(Node<T>* cursor){
             if (cursor == NULL) return NULL;
             if (cursor == head) return NULL;
@@ -145,6 +157,7 @@ class Dll{
             return cursor->prev;
         }
 
+        //Gets the amount of elements in the dll
         int size() const{
             return list_size;
         }
