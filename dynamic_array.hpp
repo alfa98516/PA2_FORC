@@ -13,15 +13,12 @@ class Dynamic_Vector {
     void grow() {
         capacity *= 2;
         T* _vect = new T[capacity];
-
         for (size_t i = 0; i < size; ++i) {
             _vect[i] = vect[i];
         }
-
         for (size_t i = size; i < capacity; ++i) {
             _vect[i] = T();
         }
-
         delete[] vect;
         vect = _vect;
     }
@@ -29,19 +26,14 @@ class Dynamic_Vector {
     void shrink() {
         if (capacity <= 1)
             return;
-
         capacity /= 2;
-
         T* _vect = new T[capacity];
-
         for (size_t i = 0; i < size; ++i) {
             _vect[i] = vect[i];
         }
-
         for (size_t i = size; i < capacity; ++i) {
             _vect[i] = T();
         }
-
         delete[] vect;
         vect = _vect;
     }
